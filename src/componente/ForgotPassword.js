@@ -1,38 +1,88 @@
+// ForgotPassword.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../caracteristica/ForgotPassword.css'; // Asegúrate de crear este archivo CSS
+import '../caracteristica/ForgotPassword.css'; // Asegúrate de que este archivo de estilos exista
 
 const ForgotPassword = () => {
+  const [step, setStep] = useState(1);
   const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleNext = () => {
+    setStep(2);
+  };
+
+  const handleReset = async () => {
+    if (password !== confirmPassword) {
+      setError('Las contraseñas no coinciden');
+      return;
+    }
+
     try {
-      const response = await axios.post('http://localhost:5000/recuperar-cuenta', { email });
-      setMessage('Se ha enviado un enlace de recuperación a tu correo electrónico.');
-      setTimeout(() => {
-        navigate('/restablecer-contrasena');
-      }, 3000); // Redirigir después de 3 segundos
+      await axios.post('http://localhost:5000/restablecer-contrasena', { email, password });
+      alert('Contraseña restablecida exitosamente');
+      navigate('/login');
     } catch (error) {
-      setMessage('Error al enviar el enlace de recuperación.');
+      console.error('Error al restablecer la contraseña:', error);
+      setError('Error al restablecer la contraseña');
     }
   };
 
   return (
     <div className="forgot-password-container">
-      <h2>Recuperar cuenta</h2>
-      <p>Ingresa el correo electrónico que usas en nube eleventa para recuperar tu cuenta:</p>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Correo electrónico</label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="tudirecciondecorreo@correo.com" required />
-        </div>
-        <button type="submit" className="btn-submit">Recuperar cuenta</button>
-      </form>
-      {message && <p className="message">{message}</p>}
+      {step === 1 ? (
+        <>
+          <h2>Restablecer Contraseña</h2>
+          <form onSubmit={(e) => e.preventDefault()} autoComplete="off">
+            <div className="form-group">
+              <label>Email *</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <button type="button" className="btn-next" onClick={handleNext}>Siguiente</button>
+          </form>
+        </>
+      ) : (
+        <>
+          <h2>Restablecer la contraseña</h2>
+          <form onSubmit={(e) => e.preventDefault()} autoComplete="off">
+            <div className="form-group">
+              <label>Nueva contraseña *</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                minLength="8"
+              />
+            </div>
+            <div className="form-group">
+              <label>Vuelve a escribir la contraseña *</label>
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                minLength="8"
+              />
+            </div>
+            <p>8 caracteres como mínimo, distingue mayúsculas de minúsculas</p>
+            {error && <p className="error">{error}</p>}
+            <div className="button-group">
+              <button type="button" className="btn-cancel" onClick={() => setStep(1)}>Cancelar</button>
+              <button type="button" className="btn-reset" onClick={handleReset}>Siguiente</button>
+            </div>
+          </form>
+        </>
+      )}
     </div>
   );
 };

@@ -1,41 +1,58 @@
+// ResetPassword.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import '../caracteristica/ResetPassword.css'; // Asegúrate de crear este archivo CSS
+import { useLocation, useNavigate } from 'react-router-dom';
+import '../caracteristica/ResetPassword.css'; // Asegúrate de que este archivo de estilos exista
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
+  const location = useLocation();
+  const navigate = useNavigate();
+  const email = location.state?.email;
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleReset = async () => {
     if (password !== confirmPassword) {
-      setMessage('Las contraseñas no coinciden.');
+      setError('Las contraseñas no coinciden');
       return;
     }
+
     try {
-      const response = await axios.post('http://localhost:5000/restablecer-contrasena', { password });
-      setMessage('Tu contraseña ha sido restablecida exitosamente.');
+      await axios.post('http://localhost:5000/restablecer-contrasena', { email, password });
+      alert('Contraseña restablecida exitosamente');
+      navigate('/login');
     } catch (error) {
-      setMessage('Error al restablecer la contraseña.');
+      console.error('Error al restablecer la contraseña:', error);
+      setError('Error al restablecer la contraseña');
     }
   };
 
   return (
     <div className="reset-password-container">
-      <h2>Restablecer contraseña</h2>
-      <form onSubmit={handleSubmit}>
+      <h2>Ingresa la Nueva Contraseña</h2>
+      <form onSubmit={(e) => e.preventDefault()} autoComplete="off">
         <div className="form-group">
-          <label>Nueva contraseña</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Nueva contraseña" required />
+          <label>Nueva Contraseña *</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
         </div>
         <div className="form-group">
-          <label>Confirmar contraseña</label>
-          <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirmar contraseña" required />
+          <label>Confirmar Contraseña *</label>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
         </div>
-        <button type="submit" className="btn-submit">Restablecer contraseña</button>
+        {error && <p className="error">{error}</p>}
+        <button type="button" className="btn-reset" onClick={handleReset}>Restablecer Contraseña</button>
       </form>
-      {message && <p className="message">{message}</p>}
     </div>
   );
 };

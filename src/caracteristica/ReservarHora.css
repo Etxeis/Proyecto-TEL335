@@ -1,0 +1,48 @@
+.reserve-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.react-calendar {
+  margin: 20px auto;
+  max-width: 90%;
+}
+
+.horarios {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.horario {
+  background-color: #ffffcc;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
+  width: 150px;
+  text-align: center;
+}
+
+.horario button {
+  background-color: #ff66b2;
+  border: none;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.horario button:hover {
+  background-color: #ff3385;
+}
+
+.mensaje {
+  color: green;
+  font-weight: bold;
+}
+
+h2 {
+  margin-top: 20px;
+}

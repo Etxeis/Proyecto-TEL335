@@ -4,6 +4,7 @@ import Login from './componente/Login';
 import Register from './componente/Register';
 import ForgotPassword from './componente/ForgotPassword';
 import ResetPassword from './componente/ResetPassword';
+import ReservarHora from './componente/ReservarHora';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/registrar" element={<Register />} />
           <Route path="/olvidar-contrasena" element={<ForgotPassword />} />
           <Route path="/restablecer-contrasena" element={<ResetPassword />} />
+          <Route path="/reservar-hora" element={<ReservarHora />} />
         </Routes>
       </div>
     </Router>
