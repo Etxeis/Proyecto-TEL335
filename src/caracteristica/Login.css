@@ -1,0 +1,76 @@
+/* Asegúrate de que el cuerpo y el contenedor principal tengan una altura del 100% */
+body, html {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7f7f7; /* Color de fondo opcional */
+  font-family: Arial, sans-serif;
+}
+
+.login-container {
+  max-width: 500px; /* Aumentar la anchura máxima */
+  width: 100%;
+  padding: 40px; /* Aumentar el padding */
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.login-container p {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.login-container .form-group {
+  margin-bottom: 15px;
+}
+
+.login-container .form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.login-container .form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.login-container .forgot-password {
+  display: block;
+  text-align: right;
+  margin-bottom: 20px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.login-container .forgot-password:hover {
+  text-decoration: underline;
+}
+
+.login-container .btn-submit {
+  width: 100%;
+  padding: 15px; /* Aumentar el padding del botón */
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.login-container .btn-submit:hover {
+  background-color: #444;
+}

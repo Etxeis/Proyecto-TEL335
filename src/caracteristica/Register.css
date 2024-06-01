@@ -1,0 +1,85 @@
+/* Asegúrate de que el cuerpo y el contenedor principal tengan una altura del 100% */
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f7f7f7; /* Color de fondo opcional */
+    font-family: Arial, sans-serif;
+  }
+  
+  .register-container {
+    max-width: 400px; /* Aumentar la anchura máxima si es necesario */
+    width: 100%;
+    padding: 40px; /* Aumentar el padding */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .register-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  
+  .register-container p {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .register-container .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .register-container .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .register-container .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .register-container .btn-submit {
+    width: 100%;
+    padding: 15px; /* Aumentar el padding del botón */
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 20px; /* Espacio extra para el enlace de inicio de sesión */
+  }
+  
+  .register-container .btn-submit:hover {
+    background-color: #444;
+  }
+  
+  .register-container .login-link {
+    text-align: center;
+  }
+  
+  .register-container .login-link a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .register-container .login-link a:hover {
+    text-decoration: underline;
+  }
+  
+  .register-container .error-message {
+    color: red;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
