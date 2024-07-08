@@ -23,9 +23,6 @@ app.post('/registrar', async (req, res) => {
   const { nombre, apellido, correo, contrasena } = req.body;
   const hashedPassword = await bcrypt.hash(contrasena, 10);
 
-  console.log('Datos recibidos:', { nombre, apellido, correo, contrasena });
-  console.log('Contraseña encriptada:', hashedPassword);
-
   try {
     // Verificar si el correo ya existe
     const correoExistente = await pool.query('SELECT * FROM personas WHERE correo = $1', [correo]);
@@ -37,7 +34,6 @@ app.post('/registrar', async (req, res) => {
       'INSERT INTO personas (nombre, apellido, correo, contrasena) VALUES ($1, $2, $3, $4) RETURNING *',
       [nombre, apellido, correo, hashedPassword]
     );
-    console.log('Resultado de la inserción:', result.rows[0]);
     res.status(201).json({ message: 'Usuario registrado exitosamente', user: result.rows[0] });
   } catch (err) {
     console.error('Error al insertar en la base de datos:', err);
@@ -71,8 +67,10 @@ app.post('/iniciar-sesion', async (req, res) => {
 
 // Obtener horarios disponibles
 app.get('/horarios-disponibles', async (req, res) => {
+  const { departamento, fecha } = req.query;
   try {
-    const result = await pool.query('SELECT * FROM horarios WHERE correo_usuario IS NULL');
+    const result = await pool.query('SELECT * FROM horario WHERE departamento = $1 AND fecha = $2 AND reservado = FALSE', [departamento, fecha]);
+    console.log('Horarios recuperados:', result.rows); // Añadir log para verificar datos
     res.status(200).json(result.rows);
   } catch (err) {
     console.error('Error al obtener los horarios:', err);
@@ -86,7 +84,7 @@ app.post('/reservar-hora/:id', async (req, res) => {
   const { correo } = req.body;
 
   try {
-    const result = await pool.query('UPDATE horarios SET correo_usuario = $1 WHERE id = $2 AND correo_usuario IS NULL RETURNING *', [correo, id]);
+    const result = await pool.query('UPDATE horario SET reservado = TRUE, correo_usuario = $1 WHERE id = $2 AND reservado = FALSE RETURNING *', [correo, id]);
     if (result.rowCount === 0) {
       return res.status(404).json({ error: 'Horario no encontrado o ya reservado' });
     }
@@ -114,6 +112,47 @@ app.post('/restablecer-contrasena', async (req, res) => {
   } catch (err) {
     console.error('Error al restablecer la contraseña:', err);
     res.status(500).json({ error: 'Error al restablecer la contraseña' });
+  }
+});
+
+// Obtener perfil del usuario y sus reservas
+app.get('/usuario', async (req, res) => {
+  const { correo } = req.query;
+  try {
+    const result = await pool.query('SELECT * FROM personas WHERE correo = $1', [correo]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+    res.status(200).json(result.rows[0]);
+  } catch (err) {
+    console.error('Error al obtener el perfil del usuario:', err);
+    res.status(500).json({ error: 'Error al obtener el perfil del usuario.', detalle: err.message });
+  }
+});
+
+app.get('/reservas', async (req, res) => {
+  const { correo } = req.query;
+  try {
+    const result = await pool.query('SELECT * FROM horario WHERE correo_usuario = $1', [correo]);
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error('Error al obtener las reservas:', err);
+    res.status(500).json({ error: 'Error al obtener las reservas.', detalle: err.message });
+  }
+});
+
+// Eliminar una reserva
+app.delete('/reservar-hora/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await pool.query('UPDATE horario SET reservado = FALSE, correo_usuario = NULL WHERE id = $1 RETURNING *', [id]);
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: 'Reserva no encontrada' });
+    }
+    res.status(200).json({ message: 'Reserva eliminada exitosamente', horario: result.rows[0] });
+  } catch (err) {
+    console.error('Error al eliminar la reserva:', err);
+    res.status(500).json({ error: 'Error al eliminar la reserva.' });
   }
 });
 

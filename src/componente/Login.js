@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import '../caracteristica/Login.css';
 
-const Login = () => {
+const Login = ({ setIsAuthenticated }) => {
   const [correo, setCorreo] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [error, setError] = useState('');
@@ -16,6 +16,8 @@ const Login = () => {
       console.log(response.data);
       if (response.data.message === 'Inicio de sesión exitoso') {
         setError(''); // Limpiar cualquier error previo
+        localStorage.setItem('userEmail', correo); // Guardar el correo en localStorage
+        setIsAuthenticated(true); // Actualizar el estado de autenticación
         navigate('/reservar-hora'); // Redirigir a la página de reserva de horario después del inicio de sesión exitoso
       } else {
         setError(response.data.error); // Mostrar el mensaje de error desde el servidor

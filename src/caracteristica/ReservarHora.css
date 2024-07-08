@@ -8,6 +8,47 @@
   max-width: 90%;
 }
 
+/* Cambiar color de fondo del encabezado del calendario */
+.react-calendar__navigation {
+  background-color: #ffcc99; /* Cambia este color al que prefieras */
+  color: #333; /* Color del texto */
+}
+
+.react-calendar__navigation button {
+  color: #333; /* Color del texto de los botones */
+}
+
+/* Cambiar color de fondo de los días de la semana */
+.react-calendar__month-view__weekdays {
+  background-color: #ffcc99; /* Cambia este color al que prefieras */
+  color: #333; /* Color del texto */
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  color: #333; /* Color del texto */
+  font-weight: bold;
+  padding: 10px 0;
+}
+
+.react-calendar__tile {
+  color: black; /* Cambia el color de los números del calendario */
+}
+
+.react-calendar__tile:disabled {
+  background-color: #f0f0f0;
+  color: #d6d6d6;
+}
+
+.react-calendar__tile--active {
+  background: #006edc;
+  color: white;
+}
+
+.react-calendar__tile--now {
+  background: #ffffcc;
+  color: #ff66b2;
+}
+
 .horarios {
   display: flex;
   flex-wrap: wrap;
@@ -28,7 +69,7 @@
 .horario button {
   background-color: #ff66b2;
   border: none;
-  color: white;
+  color: rgb(118, 42, 42);
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
@@ -45,4 +86,39 @@
 
 h2 {
   margin-top: 20px;
+}
+
+.horarios-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.horarios {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.horario {
+  background-color: #ffffcc;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.horario.selected {
+  background-color: #d1c4e9;
+}
+
+.horario:hover {
+  background-color: #e0e0e0;
+}
+
+button {
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
 }

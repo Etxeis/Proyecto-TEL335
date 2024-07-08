@@ -1,8 +1,7 @@
-// ResetPassword.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
-import '../caracteristica/ResetPassword.css'; // Asegúrate de que este archivo de estilos exista
+import '../caracteristica/ResetPassword.css';
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
@@ -21,7 +20,7 @@ const ResetPassword = () => {
     try {
       await axios.post('http://localhost:5000/restablecer-contrasena', { email, password });
       alert('Contraseña restablecida exitosamente');
-      navigate('/login');
+      navigate('/iniciar-sesion');
     } catch (error) {
       console.error('Error al restablecer la contraseña:', error);
       setError('Error al restablecer la contraseña');
