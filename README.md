@@ -27,12 +27,13 @@ La construcción está minificada y los nombres de los archivos incluyen los has
 
 Se requiere modificar y correr un par de archivos para que la base de datos de la aplicación funcione correctamente.
 
-Ingresara la carpeta 'backend' y modificar el archivo 'index.js' con las credenciales correspondientes de la base de datos de postgre propias y luego al directorio 'crear-tabla' y modficar los archivos 'db.js' y 'crearTabla.js' nuevamente con las credenciales correctas. 
+Ingresara la carpeta 'backend' y modificar el archivo 'index.js' con las credenciales correspondientes de la base de datos de postgre propias y luego al directorio 'crear-tabla' y modficar todos los archivos nuevamente con las credenciales correctas. 
 
 Luego ejecutar:
 
 ### `node index.js`
 ### `node crearTabla.js`
-### `node db.js`
+### `node createHorariosTable.js`
+### `node crearHorarios.js`
 
 
